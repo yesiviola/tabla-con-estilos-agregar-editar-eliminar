@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla con Estilo</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #a9dbd8;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        tr:nth-child(even) {
+            background-color: #e6e6e6;
+        }
+        td {
+            padding: 10px;
+            border: 1px solid #dddddd;
+        }
+        .btn-agregar,
+        .btn-editar,
+        .btn-eliminar {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tabla con Estilo</h1>
+    <table id="miTabla">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Ciudad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Juan</td>
+                <td>25</td>
+                <td>Madrid</td>
+                <td>
+                    <button class="btn-editar">Editar</button>
+                    <button class="btn-eliminar">Eliminar</button>
+                    <button class="btn-agregar">Agregar</button>
+                </td>
+            </tr>
+            <tr>
+                <td>María</td>
+                <td>30</td>
+                <td>Barcelona</td>
+                <td>
+                    <button class="btn-editar">Editar</button>
+                    <button class="btn-eliminar">Eliminar</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Carlos</td>
+                <td>28</td>
+                <td>Valencia</td>
+                <td>
+                    <button class="btn-editar">Editar</button>
+                    <button class="btn-eliminar">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div id="formularioEdicion" style="display: none;">
+        <h2>Editar Fila</h2>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre">
+        <br>
+        <label for="edad">Edad:</label>
+        <input type="text" id="edad">
+        <br>
+        <label for="ciudad">Ciudad:</label>
+        <input type="text" id="ciudad">
+        <br>
+        <button id="btnGuardar">Guardar</button>
+    </div>
+    <div id="formularioEdicion" style="display: none;">
+    </div>
+<div id="formularioAgregacion" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background-color: #f9f9f9;">
+    <h2>Agregar Fila</h2>
+    <div style="margin-bottom: 10px;">
+        <label for="nombreNuevo">Nombre:</label>
+        <input type="text" id="nombreNuevo" style="margin-left: 20px;">
+    </div>
+    <div style="margin-bottom: 10px;">
+        <label for="edadNuevo">Edad:</label>
+        <input type="text" id="edadNuevo" style="margin-left: 40px;">
+    </div>
+    <div style="margin-bottom: 10px;">
+        <label for="ciudadNuevo">Ciudad:</label>
+        <input type="text" id="ciudadNuevo" style="margin-left: 27px;">
+    </div>
+    <button id="btnAgregar" style="background-color: #4CAF50; color: white; border: none; padding: 10px 10px; cursor: pointer;">Agregar</button>
+</div>
+    <script>
+        const formularioAgregacion = document.getElementById('formularioAgregacion');
+        const inputNombreNuevo = document.getElementById('nombreNuevo');
+        const inputEdadNuevo = document.getElementById('edadNuevo');
+        const inputCiudadNuevo = document.getElementById('ciudadNuevo');
+        const btnAgregar = document.getElementById('btnAgregar');
+        function agregarFila() {
+            const newRow = document.createElement('tr');
+            const nombreNuevo = document.createElement('td');
+            nombreNuevo.textContent = inputNombreNuevo.value;
+            const edadNuevo = document.createElement('td');
+            edadNuevo.textContent = inputEdadNuevo.value;
+            const ciudadNuevo = document.createElement('td');
+            ciudadNuevo.textContent = inputCiudadNuevo.value;
+            const accionesNuevo = document.createElement('td');
+            const btnEditarNuevo = document.createElement('button');
+            btnEditarNuevo.className = 'btn-editar';
+            btnEditarNuevo.textContent = 'Editar';
+            const btnEliminarNuevo = document.createElement('button');
+            btnEliminarNuevo.className = 'btn-eliminar';
+            btnEliminarNuevo.textContent = 'Eliminar';
+
+            accionesNuevo.appendChild(btnEditarNuevo);
+            accionesNuevo.appendChild(btnEliminarNuevo);
+            newRow.appendChild(nombreNuevo);
+            newRow.appendChild(edadNuevo);
+            newRow.appendChild(ciudadNuevo);
+            newRow.appendChild(accionesNuevo);
+            tbody.appendChild(newRow);
+            
+            inputNombreNuevo.value = '';
+            inputEdadNuevo.value = '';
+            inputCiudadNuevo.value = '';
+            
+            
+            btnEditarNuevo.addEventListener('click', () => {
+                editarFila(newRow);
+            });
+            
+            btnEliminarNuevo.addEventListener('click', () => {
+                eliminarFila(newRow);
+            });
+        }
+
+        btnAgregar.addEventListener('click', () => {
+            agregarFila();
+        });
+
+        const tabla = document.getElementById('miTabla');
+        const tbody = tabla.querySelector('tbody');
+        const filas = tbody.querySelectorAll('tr');
+        
+        function editarFila(fila) {
+            console.log('Editar fila: ', fila);
+        }
+        const formularioEdicion = document.getElementById('formularioEdicion');
+        const inputNombre = document.getElementById('nombre');
+        const inputEdad = document.getElementById('edad');
+        const inputCiudad = document.getElementById('ciudad');
+        const btnGuardar = document.getElementById('btnGuardar');
+        
+        function editarFila(fila) {
+            const datosFila = fila.children;
+            const nombre = datosFila[0].textContent;
+            const edad = datosFila[1].textContent;
+            const ciudad = datosFila[2].textContent;
+        
+            inputNombre.value = nombre;
+            inputEdad.value = edad;
+            inputCiudad.value = ciudad;
+            
+            formularioEdicion.style.display = 'block';
+        
+            btnGuardar.addEventListener('click', () => {
+                datosFila[0].textContent = inputNombre.value;
+                datosFila[1].textContent = inputEdad.value;
+                datosFila[2].textContent = inputCiudad.value;
+                formularioEdicion.style.display = 'none';
+            });
+        }
+        function eliminarFila(fila) {
+    
+            fila.remove();
+        }
+    
+        filas.forEach((fila, indice) => {
+            const btnEditar = fila.querySelector('.btn-editar');
+            const btnEliminar = fila.querySelector('.btn-eliminar');
+            
+            btnEditar.addEventListener('click', () => {
+                editarFila(fila);
+            });
+            
+            btnEliminar.addEventListener('click', () => {
+                eliminarFila(fila);
+            });
+        });
+    </script>
+</body>
+</html>
